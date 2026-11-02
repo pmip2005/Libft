@@ -6,7 +6,7 @@
 /*   By: ppoco <ppoco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 17:54:57 by ppoco             #+#    #+#             */
-/*   Updated: 2026/10/30 20:40:34 by ppoco            ###   ########.fr       */
+/*   Updated: 2026/11/02 17:16:58 by ppoco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	while (lst)
 	{
 		content = f(lst->content);
+		if (!content)
+			return (NULL);
 		new_node = ft_lstnew(content);
 		if (!new_node)
 		{

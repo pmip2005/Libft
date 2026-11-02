@@ -6,7 +6,7 @@
 /*   By: ppoco <ppoco@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/30 18:24:34 by ppoco             #+#    #+#             */
-/*   Updated: 2026/10/30 20:43:35 by ppoco            ###   ########.fr       */
+/*   Updated: 2026/11/02 16:14:38 by ppoco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,13 @@ static void	free_words(char **ptr, int count)
 	free(ptr);
 }
 
-static char	*fill_word(char const *s, int j)
+static int	skip_delimiters(const char *s, int *i, char c)
 {
-	char	*word;
-
-	word = malloc(sizeof(char) * (j + 1));
-	if (!word)
-	{
-		return (NULL);
-	}
-	ft_strlcpy(word, s, j + 1);
-	return (word);
+	while (s[*i] == c)
+		(*i)++;
+	if (s[*i] == '\0')
+		return (-1);
+	return (1);
 }
 
 char	**ft_split(char const *s, char c)
@@ -79,10 +75,10 @@ char	**ft_split(char const *s, char c)
 		return (free_words(ptr, words), NULL);
 	while (s[i])
 	{
-		while (s[i] == c)
-			i++;
+		if (skip_delimiters(s, &i, c) == -1)
+			break ;
 		j = get_word_len(s, c, i);
-		ptr[words] = fill_word(&s[i], j);
+		ptr[words] = ft_substr(s, i, j);
 		if (!ptr[words])
 			return (free_words(ptr, words), NULL);
 		words ++;

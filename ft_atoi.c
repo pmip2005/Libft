@@ -12,13 +12,6 @@
 
 #include "libft.h"
 
-static int	is_num(char c)
-{
-	if (c >= '0' && c <= '9')
-		return (1);
-	return (0);
-}
-
 int	ft_atoi(const char *str)
 {
 	int		i;
@@ -32,13 +25,11 @@ int	ft_atoi(const char *str)
 		return (0);
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	while (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign *= -1;
+	if (str[i] == '-')
+		sign *= -1;
+	if (str[i] == '-' || str[i] == '+')
 		i++;
-	}
-	while (is_num(str[i]))
+	while (ft_isdigit(str[i]))
 	{
 		out = out * 10 + (str[i] - '0');
 		i++;
